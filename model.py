@@ -5,7 +5,7 @@ class IDRecognizer(nn.Module):
     def __init__(self, num_digits=14, num_classes=10):
         super().__init__()
         self.features = nn.Sequential(
-            nn.Conv2d(1, 32, 3, padding=1), # 28x392
+            nn.Conv2d(1, 32, 3, padding=1),  # 28x392
             nn.ReLU(),
             nn.MaxPool2d(2),  # 14x196
             nn.Conv2d(32, 64, 3, padding=1),

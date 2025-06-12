@@ -10,6 +10,7 @@ import os
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
+
 class IDDataset(Dataset):
     def __init__(self, img_dir, label_file):
         self.img_dir = img_dir

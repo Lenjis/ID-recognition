@@ -6,6 +6,7 @@ import sys
 
 TEST_PATH = "data/test"  # 测试图像目录
 
+
 def infer(img_path):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = IDRecognizer().to(device)
