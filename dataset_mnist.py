@@ -7,10 +7,12 @@ from PIL import Image
 from tqdm import tqdm
 
 # 参数配置
-NUM_SAMPLES = 5000         # 生成样本数量
+NUM_SAMPLES = 10         # 生成样本数量
 DIGITS_PER_ID = 14         # 学号位数
-OUTPUT_DIR = 'data/images'
-LABEL_FILE = 'data/labels.txt'
+# OUTPUT_DIR = 'data/images'
+OUTPUT_DIR = 'data/test'
+# LABEL_FILE = 'data/labels.txt'
+LABEL_FILE = 'data/test_labels.txt'
 IMG_HEIGHT = 28
 IMG_WIDTH = 28 * DIGITS_PER_ID
 

@@ -1,11 +1,14 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import matplotlib.pyplot as plt
+from tqdm import tqdm
 from torch.utils.data import Dataset, DataLoader
 from model import IDRecognizer
 from utils import preprocess_image, transform
 import os
 
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 class IDDataset(Dataset):
     def __init__(self, img_dir, label_file):
@@ -25,9 +28,8 @@ class IDDataset(Dataset):
         img = transform(img)  # [1, H, W]
         label = torch.tensor([int(c) for c in label], dtype=torch.long)
         return img, label
-    
 
-# 训练主函数
+
 def train():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = IDRecognizer().to(device)
@@ -37,9 +39,12 @@ def train():
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
-    for epoch in range(10):
+    epoch_losses = []
+
+    for epoch in range(16):
         model.train()
-        for imgs, labels in dataloader:
+        running_loss = 0.0
+        for imgs, labels in tqdm(dataloader):
             imgs, labels = imgs.to(device), labels.to(device)
             outputs = model(imgs)  # list of logits
 
@@ -49,10 +54,22 @@ def train():
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            running_loss += loss.item() * imgs.size(0)
 
-        print(f"Epoch {epoch}, Loss: {loss.item():.4f}")
+        epoch_loss = running_loss / len(dataset)
+        epoch_losses.append(epoch_loss)
+        print(f"Epoch {epoch}, Loss: {epoch_loss:.4f}")
 
     torch.save(model.state_dict(), "id_model.pth")
+
+    with open("loss_log.txt", "w") as f:
+        f.write("Epoch\tLoss\n")
+        for epoch, loss in enumerate(epoch_losses, 1):
+            f.write(f"{epoch}\t{loss:.6f}\n")
+
+    # 绘制 loss 曲线
+    # plt.figure()
+    # plt.plot(range(1, len(epoch_losses) + 1), epoch_losses, marker="o")
 
 
 if __name__ == "__main__":

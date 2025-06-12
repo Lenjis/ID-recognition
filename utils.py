@@ -7,7 +7,7 @@ from torchvision import transforms
 def preprocess_image(img_path):
     img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
     _, binary = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-    binary = cv2.resize(binary, (200, 50))  # 例：10位学号，每位宽20，高50
+    # binary = cv2.resize(binary, (200, 50))  # 例：10位学号，每位宽20，高50
     return binary.astype(np.float32) / 255.0
 
 

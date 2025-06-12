@@ -1,8 +1,10 @@
 import torch
 from model import IDRecognizer
 from utils import preprocess_image, transform
+import os
 import sys
 
+TEST_PATH = "data/test"  # 测试图像目录
 
 def infer(img_path):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -21,4 +23,7 @@ def infer(img_path):
 
 
 if __name__ == "__main__":
-    infer(sys.argv[1])  # 命令行输入图像路径
+    # infer(sys.argv[1])  # 命令行输入图像路径
+    for img in os.listdir(TEST_PATH):
+        img_path = os.path.join(TEST_PATH, img)
+        infer(img_path)
