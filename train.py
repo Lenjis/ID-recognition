@@ -34,7 +34,7 @@ class IDDataset(Dataset):
 def train():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = IDRecognizer().to(device)
-    dataset = IDDataset("data/images", "data/labels.txt")
+    dataset = IDDataset("data/train", "data/train_labels.txt")
     dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
 
     criterion = nn.CrossEntropyLoss()
