@@ -1,25 +1,27 @@
 import matplotlib.pyplot as plt
 import matplotlib
 
-plt.rcParams["font.serif"] = ["Microsoft Yahei"]
+plt.rcParams["font.serif"] = ["NewComputerModern10"]
 plt.rcParams["font.family"] = "serif"
 plt.rcParams["font.size"] = 14
 
 
 epochs = []
-losses = []
+losses_train = []
+losses_test = []
 with open("loss_log.txt", "r") as f:
     next(f)
     for line in f:
-        epoch, loss = line.strip().split("\t")
+        epoch, loss_train, loss_test = line.strip().split("\t")
         epochs.append(int(epoch))
-        losses.append(float(loss))
+        losses_train.append(float(loss_train))
+        losses_test.append(float(loss_test))
 plt.figure(figsize=(8, 6))
-plt.semilogy(epochs, losses, "b-", marker="o", label="Training Loss")
+plt.plot(epochs, losses_train, "b-", marker="o", label="Training Loss")
+plt.plot(epochs, losses_test, "g-", marker="s", label="Validation Loss")
 plt.legend()
-plt.xlabel("迭代次数")
-plt.ylabel("损失值")
-plt.title("Training Loss Curve")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
 plt.grid()
 plt.savefig("fig/loss_curve.pdf")
 plt.show()

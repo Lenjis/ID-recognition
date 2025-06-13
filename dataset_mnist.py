@@ -7,7 +7,7 @@ from PIL import Image
 from tqdm import tqdm
 
 # 参数配置
-NUM_SAMPLES = 10  # 生成样本数量
+NUM_SAMPLES = 100  # 生成样本数量
 DIGITS_PER_ID = 14  # 学号位数
 # OUTPUT_DIR = 'data/images'
 OUTPUT_DIR = "data/test"

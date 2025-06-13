@@ -15,6 +15,7 @@ class IDRecognizer(nn.Module):
         self.classifiers = nn.ModuleList(
             [
                 nn.Sequential(
+                    nn.Dropout(0.7),
                     nn.Linear(64 * 7 * 98, 128), nn.ReLU(), nn.Linear(128, num_classes)
                 )
                 for _ in range(num_digits)
